@@ -1,0 +1,76 @@
+
+def silnia(n):
+    s = 1
+    for i in range(2, n+1):
+        s = s * i
+    return s
+
+
+print('Iloma taliami grasz?')
+ilosc_talii = int(input())
+
+print('Ile kart kazdy dostaje na poczatku?')
+ilosc_kart_poczatek = int(input())
+
+
+talia = 52
+
+ilosc_kart = talia * ilosc_talii
+
+print("""
+Jakiej karty szukasz?
+[2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K, A]
+""")
+karta_input = input()
+
+if karta_input.upper() == 'J':
+    karta = '11'
+elif karta_input.upper() == 'Q':
+    karta = '12'
+elif karta_input.upper() == 'K':
+    karta = '13'
+elif karta_input.upper() == 'A':
+    karta = '14'
+else:
+    karta = int(karta_input)
+
+print('Ile chcesz tych kart?')
+ile_kart = int(input())
+
+liczba_kart_sz = 4 * ilosc_talii
+
+print('Ile osob gra?')
+liczba_osob = int(input())
+
+
+print('Ktora tura to jest?')
+indeks_tura = int(input())
+
+print('Czy widziales ta karte?[T/N]')
+czy_widzial = input()
+
+if czy_widzial.upper() == 'T':
+    print('Ile ich widziales?')
+    ile_widzial = int(input())
+
+    liczba_kart_sz -= ile_widzial
+
+ilosc_kart -= (liczba_osob * ilosc_kart_poczatek) + (indeks_tura-1 * liczba_osob)
+
+prawdopodobienstwo_karty = silnia(liczba_kart_sz)/(silnia(ile_kart)*silnia(liczba_kart_sz-ile_kart))
+kombinacje = silnia(ilosc_kart)/(silnia(ile_kart)*silnia(ilosc_kart-ile_kart))
+
+szansa_ze_ktos = (liczba_osob-1/liczba_osob) * prawdopodobienstwo_karty/kombinacje
+szansa_ze_ty = prawdopodobienstwo_karty/(kombinacje*liczba_osob)
+
+licznik1 = (liczba_osob-1/liczba_osob) * prawdopodobienstwo_karty
+mianownik1 = kombinacje
+
+licznik2 = prawdopodobienstwo_karty
+mianownik2 = (kombinacje*liczba_osob)
+
+print('Prawdopodobienstwo na to ze dostaniesz ' + f'{karta_input}' + ' wynosi: ' f'{licznik2}' + '/' + f'{mianownik2}')
+print(f'{szansa_ze_ty}' + '\n')
+
+print('Prawdopodobienstwo ze ktos inny to: ' + f'{licznik1}' + '/' + f'{mianownik1}')
+print(f'{szansa_ze_ktos}')
